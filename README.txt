@@ -5,6 +5,13 @@
  written in 2011 
  updated through 2018-07
 
+Remaining Lesson Timer,  version 3 
+----------------------------------
+By Greg Smith   {@link http://www.pwsdb.com} 
+This module was developed for the Tom Wilson Counseling Center, Boise, Idaho
+written in 2011 
+updated through 2018
+
 This side block displays the elapsed and remaining time, to a tenth of a minute, in a 
 timed lesson.  It will display "Time Completed" after the time limit has been reached.
 There is a "REFRESH TIMER" option which refreshes the page and updates the timer.
@@ -31,7 +38,8 @@ timer will simply display the required time to be spent and 0 for the actual tim
 No records are written by this timer display.  
 
 Note:
-The "REFRESH TIMER" option is not displayed on the first page of a lesson because till 
+The "REFRESH TIMER" button is not displayed on the first page of a lesson because till 
 moodle 3.3, refreshing the first page causes the elapsed time to get zeroed out and 
 trying to refresh the continue.php causes a browser warning against resending data and 
 repeating actions.
+
