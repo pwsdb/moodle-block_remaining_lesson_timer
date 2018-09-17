@@ -1,14 +1,5 @@
 
-/* ******************************** *
- * by Greg K. Smith           2008  *
- * Programming Web Site Data Bases  *
- * www.pwsdb.com    greg@pwsdb.com  *
- * Pompano Beach,  Florida   33060  *
- * ******************************** *
- * block_remaining_lesson_timer     *
- * ******************************** */
-
-
+                                ----------------------
                                 Remaining Lesson Timer
                                 ----------------------
  written in 2011 
