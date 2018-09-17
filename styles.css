@@ -1,4 +1,4 @@
-.block_remaining_lesson_timer .content .completed  {
+.block_remaining_lesson_timer .content .completed {
     color: green;
     font-weight: bold;
 }
