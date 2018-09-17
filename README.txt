@@ -8,6 +8,7 @@
 Remaining Lesson Timer,  version 3 
 ----------------------------------
 By Greg Smith   {@link http://www.pwsdb.com} 
+for   {@link http://TomWilsonCounseling.com}
 This side block "remaining_lesson_timer" is for all current moodle versions through 
 ver. 3.6 and is backward compatible through moodle versions 2.
 
