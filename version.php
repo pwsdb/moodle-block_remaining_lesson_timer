@@ -14,16 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Version details
+/*
+ * Block for displaying the elapsed and remaining time in a timed lesson
  *
  * @package    block_remaining_lesson_timer
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  2011 onwards Greg Smith, Pompano Beach, USA
- */ 
+ * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Greg Smith, Florida
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2018051700;      // YYYYMMDDHH (Moodle 3.5+)
-$plugin->requires  = 2010112400;      // YYYYMMDDHH (Moodle 2.0+) 
-$plugin->component = 'block_remaining_lesson_timer'; 
+$plugin->requires  = 2010112400;      // YYYYMMDDHH (Moodle 2.0+)
+$plugin->component = 'block_remaining_lesson_timer';
+
