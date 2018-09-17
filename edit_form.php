@@ -20,7 +20,7 @@
  * @package    block_remaining_lesson_timer
  * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @author     Greg Smith
+ * @author     Greg Smith, Florida
  */
 
 class  block_timer_countdown_edit_form  extends block_edit_form {
