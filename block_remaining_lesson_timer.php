@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/* 
- * Block for displaying the elapsed and remaining time in a timed lesson 
+/*
+ * Block for displaying the elapsed and remaining time in a timed lesson
  *
- * @package    block_remaining_lesson_timer 
+ * @package    block_remaining_lesson_timer
  * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @author     Greg Smith 
+ * @author     Greg Smith
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -28,12 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 class block_remaining_lesson_timer  extends block_base {
 
     function init() {
-        $this->title = 'Remaining Lesson Timer'; 
+        $this->title = 'Remaining Lesson Timer';
     }
 
     function applicable_formats() {
         return array('site-index' => true,
-                            'mod' => true, 
+                            'mod' => true,
                     'lesson-view' => true,
                     'course-view' => true);
     }
@@ -47,88 +47,88 @@ class block_remaining_lesson_timer  extends block_base {
     }
     function get_content() {
 
-        global $CFG, $USER, $DB ; 
+        global $CFG, $USER, $DB;
 
         if ($this->content !== null) :
             return $this->content;
         endif;
-        $this->content  =  new stdClass;
+        $this->content = new stdClass;
         $this->content->text = '';
-        $this->content->footer = ''; 
+        $this->content->footer = '';
 
-        //  See if we are in a lesson page 
+        //  See if we are in a lesson page.
         if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson')) {
             if (isset($_GET['id'])) :
-                $getmodid = $_GET['id'] ;
-                $_SESSION['lessonmod'] = $getmodid ;
+                $getmodid = $_GET['id'];
+                $_SESSION['lessonmod'] = $getmodid;
             endif;
 
             if (isset($_SESSION['lessonmod'])) {
-                $querycml = 
-                   "SELECT  cm.id AS cmid,  cm.module,  cm.instance,  
-                            cm.section,  l.* 
-                      FROM  {course_modules} AS cm 
+                $querycml =
+                   "SELECT  cm.id AS cmid,  cm.module,  cm.instance,
+                            cm.section,  l.*
+                      FROM  {course_modules} AS cm
                       JOIN  {lesson} l
-                        ON  ( l.id = cm.instance  AND  cm.course = l.course ) 
-                     WHERE  cm.id = ".$_SESSION['lessonmod']." 
-                       AND  cm.module = 11 " ;
+                        ON  ( l.id = cm.instance  AND  cm.course = l.course )
+                     WHERE  cm.id = ".$_SESSION['lessonmod']."
+                       AND  cm.module = 11 ";
 
                 $coursemodles = $DB->get_recordset_sql($querycml);
                 foreach ($coursemodles as $lesson) {
                     if ( isset($lesson->maxtime) ) :
-                        $requiredtime = $lesson->maxtime ;
+                        $requiredtime = $lesson->maxtime;
                     else:
                         $requiredtime = (int)$lesson->completiontimespent / 60 ;
                     endif;
 
                     if ($requiredtime > 0 ) {
-                        $ttltime = 0 ; 
-                        $highscore = 0 ; 
-                        $course = $lesson->course ;
-                        $lsnname = substr($lesson->name, 0, 20) ;
-                        $queryttltime = 
+                        $ttltime = 0 ;
+                        $highscore = 0 ;
+                        $course = $lesson->course;
+                        $lsnname = substr($lesson->name, 0, 20);
+                        $queryttltime =
                             "SELECT  lessontime,  starttime,  SUM(lessontime - starttime) AS ttl
-                               FROM  {lesson_timer} 
-                              WHERE  userid = $USER->id 
-                                AND  lessonid = $lesson->id " ; 
-   
+                               FROM  {lesson_timer}
+                              WHERE  userid = $USER->id
+                                AND  lessonid = $lesson->id ";
+
                         $lessonlogs = $DB->get_record_sql($queryttltime);
-   
-                        if ($lessonlogs) :        //  Get the time spent: $ttltime is in minutes  ->ttl is in seconds
+
+                        if ($lessonlogs) :        //  Get the time spent: $ttltime is in minutes  ->ttl is in seconds.
                             if ($lessonlogs->ttl > 1 ) :
-                                $ttltime = floor(($lessonlogs->ttl -1) / 6) ; 
-                                // Mdl logic is ">", not ">=" therefore "-1" before truncating and rounding 
+                                $ttltime = floor(($lessonlogs->ttl -1) / 6);
+                                // Mdl logic is ">", not ">=" therefore "-1" before truncating and rounding.
                             else:
-                                $ttltime =  floor($lessonlogs->ttl / 6) ;  
-                                // Floor(#/6) rounds a number(#) DOWN to the tenth of a minute. 
+                                $ttltime =  floor($lessonlogs->ttl / 6);
+                                // Floor(#/6) rounds a number(#) DOWN to the tenth of a minute.
                             endif;
-                            $ttltime = $ttltime / 10 ; 
-                        endif; 
+                            $ttltime = $ttltime / 10 ;
+                        endif;
                     } // 6 end if ($requiredtime > 0 )
-                } // 5 end foreach ($coursemodles as $lesson) 
+                } // 5 end foreach ($coursemodles as $lesson)
 
                 if ($requiredtime > 0 ) {
-                    $this->content->text .= '  '.$lsnname.'... ' ; 
-                    $this->content->text .= '  <p> Required time  <br> '.$requiredtime.' minutes </p> ' ; 
+                    $this->content->text .= '  '.$lsnname.'... ';
+                    $this->content->text .= '  <p> Required time  <br> '.$requiredtime.' minutes </p> ';
                     if ( $ttltime < $requiredtime ) {
-                        //   changed from  ( ($log->ttl / 60) <= $requiredtime)  on  2014-11-11 
-                       $this->content->text .= ' <p> Time spent: '.$ttltime.' min. ' ; 
+                        //   Changed from  ( ($log->ttl / 60) <= $requiredtime)  on  2014-11-11.
+                       $this->content->text .= ' <p> Time spent: '.$ttltime.' min. ';
                        $this->content->text .= ' <br> <span class=minutestogo> Time remaining: '.($requiredtime - $ttltime).
-                                               ' </span> </p> ' ; 
+                                               ' </span> </p> ';
 
                        $pageid = optional_param('pageid', NULL, PARAM_INT);    // Lesson page id
-                
-                       if ( !stripos($_SERVER['SCRIPT_FILENAME'], 'continue.php')  AND  !empty($pageid) )  
-                           $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' . 
-                                   'href='. $CFG->wwwroot . '/mod/lesson/view.php?id='.$_SESSION['lessonmod'] . 
-                                   '&pageid='.$pageid.'> REFRESH TIMER </a></div>'; 
+
+                       if ( !stripos($_SERVER['SCRIPT_FILENAME'], 'continue.php')  AND  !empty($pageid) )
+                           $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' .
+                                   'href='. $CFG->wwwroot . '/mod/lesson/view.php?id='.$_SESSION['lessonmod'] .
+                                   '&pageid='.$pageid.'> REFRESH TIMER </a></div>';
                            // Refreshing view.php updates the timer except on the first page of a lesson
-                           // On the first page, till moodle 3.3 the timer does not increment. It zeros the saved time!  
+                           // On the first page, till moodle 3.3 the timer does not increment. It zeros the saved time!
                            // The continue.php causes a browser warning against resending data and repeating actions
 
                     } else {
-                        $this->content->text .= '<p class=completed>  Time Completed  </p> ' ; 
-                    } // 6 end if ( $ttltime < $requiredtime ) 
+                        $this->content->text .= '<p class=completed>  Time Completed  </p> ';
+                    } // 6 end if ( $ttltime < $requiredtime )
                 } // 5 end if ($requiredtime > 0 )
             } // 4 end if (isset($_SESSION['lessonmod']))
 
@@ -137,6 +137,6 @@ class block_remaining_lesson_timer  extends block_base {
         return $this->content;
     } // 2 end function get_content()
 
-} 
+}
 
 
