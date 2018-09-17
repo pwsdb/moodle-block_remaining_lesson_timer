@@ -47,4 +47,15 @@ of a lesson because till moodle 3.3, refreshing the first page causes the elapse
 to get zeroed out and trying to refresh the continue.php causes a browser warning against 
 resending data and repeating actions.
 
+-----------------------------------------------------------------------------------------
+    Default installation instructions for plugins of the type Blocks
+
+    Make sure you have all the required versions.
+    Download and unpack the block folder.
+    Place the folder (eg "myblock") in the "blocks" subdirectory.
+    Visit http://yoursite.com/admin to complete the installation
+    Turn editing on in any home or course page.
+    Add the block to the page
+    Visit the config link in the block for more options.
+
 
