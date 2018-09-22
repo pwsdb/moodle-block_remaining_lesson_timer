@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 class block_remaining_lesson_timer  extends block_base {
 
     function init() {
-        $this->title = 'Remaining Lesson Timer';
+        $this->title = get_string('pluginname', 'block_remaining_lesson_timer');
     }
 
     function applicable_formats() {
@@ -105,12 +105,19 @@ class block_remaining_lesson_timer  extends block_base {
             } // 5 end foreach ($coursemodles as $lesson)
 
             if ($requiredtime > 0 ) {
+                $strRequiredTime  = get_string('requiredtime',  'block_remaining_lesson_timer');
+                $strTimeRemaining = get_string('timeremaining', 'block_remaining_lesson_timer');
+                $strTimeSpent     = get_string('timespent',     'block_remaining_lesson_timer');
+                $strTimeCompleted = get_string('timecompleted', 'block_remaining_lesson_timer');
+                $strMinutes       = get_string('minutes',       'block_remaining_lesson_timer');
                 $this->content->text .= '  '.$lsnname.'... ';
-                $this->content->text .= '  <p> Required time <br> '.$requiredtime.' minutes </p> ';
-                if ( $ttltime < $requiredtime ) {
-                    $this->content->text .= ' <p> Time spent: '.$ttltime.' min. ';
-                    $this->content->text .= ' <br> <span class=minutestogo> Time remaining: '.($requiredtime - $ttltime).
-                                            ' </span> </p> ';
+                $this->content->text .= '  <p> '.$strRequiredTime.' <br> '.$requiredtime.' '.$strMinutes.' </p> ';
+                if ( $ttltime > $requiredtime ) {
+                    $this->content->text .= '<p class=completed> <br> '.$strTimeCompleted.'  </p> ';
+                } else {
+                    $this->content->text .= ' <p> '.$strTimeSpent.': '.$ttltime.' '.$strMinutes.' ';
+                    $this->content->text .= ' <br> <span class=minutestogo> '.$strTimeRemaining.': '.
+                                            ($requiredtime - $ttltime).' '.$strMinutes.' </span> </p> ';
 
                     $pageid = optional_param('pageid', null, PARAM_INT);
 
@@ -121,10 +128,7 @@ class block_remaining_lesson_timer  extends block_base {
                         // Refreshing view.php updates the timer except on the first page of a lesson
                         // On the first page, till moodle 3.3 the timer does not increment. It zeros the saved time!
                         // The continue.php causes a browser warning against resending data and repeating actions
-
-                } else {
-                    $this->content->text .= '<p class=completed>  Time Completed  </p> ';
-                } // 5 end if ( $ttltime < $requiredtime )
+                } // 5 end if ( $ttltime > $requiredtime )
             } // 4 end if ($requiredtime > 0 )
 
         } // 3 end if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson/view'))
