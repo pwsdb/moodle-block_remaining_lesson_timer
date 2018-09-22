@@ -23,6 +23,10 @@
  * @author     Greg Smith
  */
 
-  $string['pluginname'] = 'Remaining Lesson Timer';
-
+  $string['pluginname']     = 'Remaining Lesson Timer';
+  $string['requiredtime']   = 'Required Time';
+  $string['timespent']      = 'Time Spent';
+  $string['timeremaining']  = 'Time Remaining';
+  $string['timecompleted']  = 'Time Completed';
+  $string['minutes']        = 'minutes';
 
