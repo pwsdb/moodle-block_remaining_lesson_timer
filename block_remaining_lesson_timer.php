@@ -56,82 +56,78 @@ class block_remaining_lesson_timer  extends block_base {
         $this->content->text = '';
         $this->content->footer = '';
 
-        // See if we are in a lesson page.
-        if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson')) {
-            if (isset($_GET['id'])) :
-                $getmodid = $_GET['id'];
-                $_SESSION['lessonmod'] = $getmodid;
-            endif;
+        // Confirm that this block-program is called by a lesson/view.php page., 
+        // else, terminate: return no content, end.
+        if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson/view')) {
 
-            if (isset($_SESSION['lessonmod'])) {
-                $querycml =
-                   "SELECT  cm.id AS cmid,  cm.module,  cm.instance,
-                            cm.section,  l.*
-                      FROM  {course_modules}  cm
-                      JOIN  {lesson} l
-                        ON  ( l.id = cm.instance  AND  cm.course = l.course )
-                     WHERE  cm.id = ".$_SESSION['lessonmod']."
-                       AND  cm.module = 11 ";
+            $id = required_param('id', PARAM_INT);   
+            $querycml =
+               "SELECT  cm.id AS cmid,  cm.module,  cm.instance,
+                        cm.section,  l.*
+                  FROM  {course_modules}  cm
+                  JOIN  {lesson} l
+                    ON  ( l.id = cm.instance  AND  cm.course = l.course )
+                 WHERE  cm.id = ".$id."
+                   AND  cm.module = 11 ";
 
-                $coursemodles = $DB->get_recordset_sql($querycml);
-                foreach ($coursemodles as $lesson) {
-                    if ( isset($lesson->maxtime) ) :
-                        $requiredtime = $lesson->maxtime;
-                    else:
-                        $requiredtime = (int)$lesson->completiontimespent / 60 ;
-                    endif;
-
-                    if ($requiredtime > 0 ) {
-                        $ttltime = 0 ;
-                        $highscore = 0 ;
-                        $course = $lesson->course;
-                        $lsnname = substr($lesson->name, 0, 20);
-                        $queryttltime =
-                            "SELECT  lessontime,  starttime,  SUM(lessontime - starttime) AS ttl
-                               FROM  {lesson_timer}
-                              WHERE  userid = $USER->id
-                                AND  lessonid = $lesson->id ";
-
-                        $lessonlogs = $DB->get_record_sql($queryttltime);
-
-                        if ($lessonlogs) :        //  Get the time spent: $ttltime is in minutes  ->ttl is in seconds.
-                            if ($lessonlogs->ttl > 1 ) :
-                                $ttltime = floor(($lessonlogs->ttl - 1) / 6);
-                                // Mdl logic is ">", not ">=" therefore "-1" before truncating and rounding.
-                            else:
-                                $ttltime = floor($lessonlogs->ttl / 6);
-                                // Floor(#/6) rounds a number(#) DOWN to the tenth of a minute.
-                            endif;
-                            $ttltime = $ttltime / 10 ;
-                        endif;
-                    } // 6 end if ($requiredtime > 0 )
-                } // 5 end foreach ($coursemodles as $lesson)
+            $coursemodles = $DB->get_recordset_sql($querycml);
+            foreach ($coursemodles as $lesson) {
+                if ( isset($lesson->maxtime) ) :
+                    $requiredtime = $lesson->maxtime;
+                else:
+                    $requiredtime = (int)$lesson->completiontimespent / 60 ;
+                endif;
 
                 if ($requiredtime > 0 ) {
-                    $this->content->text .= '  '.$lsnname.'... ';
-                    $this->content->text .= '  <p> Required time  <br> '.$requiredtime.' minutes </p> ';
-                    if ( $ttltime < $requiredtime ) {
-                        $this->content->text .= ' <p> Time spent: '.$ttltime.' min. ';
-                        $this->content->text .= ' <br> <span class=minutestogo> Time remaining: '.($requiredtime - $ttltime).
-                                                ' </span> </p> ';
+                    $ttltime = 0 ;
+                    $highscore = 0 ;
+                    $course = $lesson->course;
+                    $lsnname = substr($lesson->name, 0, 20);
+                    $queryttltime =
+                        "SELECT  lessontime,  starttime,  SUM(lessontime - starttime) AS ttl
+                           FROM  {lesson_timer}
+                          WHERE  userid = $USER->id
+                            AND  lessonid = $lesson->id ";
 
-                        $pageid = optional_param('pageid', null, PARAM_INT);
+                    $lessonlogs = $DB->get_record_sql($queryttltime);
 
-                        if ( !stripos($_SERVER['SCRIPT_FILENAME'], 'continue.php')  AND  !empty($pageid) )
-                            $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' .
-                                    'href='. $CFG->wwwroot . '/mod/lesson/view.php?id='.$_SESSION['lessonmod'] .
-                                    '&pageid='.$pageid.'> REFRESH TIMER </a></div>';
-                            // Refreshing view.php updates the timer except on the first page of a lesson
-                            // On the first page, till moodle 3.3 the timer does not increment. It zeros the saved time!
-                            // The continue.php causes a browser warning against resending data and repeating actions
+                    if ($lessonlogs) :        // Get the time spent: $ttltime is in minutes  ->ttl is in seconds.
+                        if ($lessonlogs->ttl > 1 ) :
+                            $ttltime = floor(($lessonlogs->ttl - 1) / 6);
+                            // Mdl logic is ">", not ">=" therefore "-1" before truncating and rounding.
+                        else:
+                            $ttltime = floor($lessonlogs->ttl / 6);
+                            // Floor(#/6) rounds a number(#) DOWN to the tenth of a minute.
+                        endif;
+                        $ttltime = $ttltime / 10 ;
+                    endif;
+                } // 6 end if ($requiredtime > 0 )
+            } // 5 end foreach ($coursemodles as $lesson)
 
-                    } else {
-                        $this->content->text .= '<p class=completed>  Time Completed  </p> ';
-                    } // 6 end if ( $ttltime < $requiredtime )
-                } // 5 end if ($requiredtime > 0 )
-            } // 4 end if (isset($_SESSION['lessonmod']))
+            if ($requiredtime > 0 ) {
+                $this->content->text .= '  '.$lsnname.'... ';
+                $this->content->text .= '  <p> Required time <br> '.$requiredtime.' minutes </p> ';
+                if ( $ttltime < $requiredtime ) {
+                    $this->content->text .= ' <p> Time spent: '.$ttltime.' min. ';
+                    $this->content->text .= ' <br> <span class=minutestogo> Time remaining: '.($requiredtime - $ttltime).
+                                            ' </span> </p> ';
 
-        } // 3 end if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson'))
+                    $pageid = optional_param('pageid', null, PARAM_INT);
+
+                    if ( !empty($pageid) )
+                        $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' .
+                                'href='. $CFG->wwwroot . '/mod/lesson/view.php?id='.$id.
+                                '&pageid='.$pageid.'> REFRESH TIMER </a></div>';
+                        // Refreshing view.php updates the timer except on the first page of a lesson
+                        // On the first page, till moodle 3.3 the timer does not increment. It zeros the saved time!
+                        // The continue.php causes a browser warning against resending data and repeating actions
+
+                } else {
+                    $this->content->text .= '<p class=completed>  Time Completed  </p> ';
+                } // 5 end if ( $ttltime < $requiredtime )
+            } // 4 end if ($requiredtime > 0 )
+
+        } // 3 end if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson/view'))
 
         return $this->content;
     } // 2 end function get_content()
