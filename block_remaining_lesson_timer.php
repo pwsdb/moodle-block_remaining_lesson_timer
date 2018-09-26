@@ -101,8 +101,8 @@ class block_remaining_lesson_timer  extends block_base {
                         endif;
                         $ttltime = $ttltime / 10 ;
                     endif;
-                } // 6 end if ($requiredtime > 0 )
-            } // 5 end if ($lesson)
+                } // 5 end if ($requiredtime > 0 )
+            } // 4 end if ($lesson)
 
             if ($requiredtime > 0 ) {
                 $strRequiredTime  = get_string('requiredtime',  'block_remaining_lesson_timer');
