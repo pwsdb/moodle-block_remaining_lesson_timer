@@ -67,11 +67,11 @@ class block_remaining_lesson_timer  extends block_base {
                   FROM  {course_modules}  cm
                   JOIN  {lesson} l
                     ON  ( l.id = cm.instance  AND  cm.course = l.course )
-                 WHERE  cm.id = ".$id."
+                 WHERE  cm.id = :id
                    AND  cm.module = 11 ";
 
-            $coursemodles = $DB->get_recordset_sql($querycml);
-            foreach ($coursemodles as $lesson) {
+            $lesson = $DB->get_record_sql($querycml, array('id'=>$id));
+            if ($lesson) {
                 if ( isset($lesson->maxtime) ) :
                     $requiredtime = $lesson->maxtime;
                 else:
@@ -86,10 +86,10 @@ class block_remaining_lesson_timer  extends block_base {
                     $queryttltime =
                         "SELECT  lessontime,  starttime,  SUM(lessontime - starttime) AS ttl
                            FROM  {lesson_timer}
-                          WHERE  userid = $USER->id
-                            AND  lessonid = $lesson->id ";
+                          WHERE  userid = :userid
+                            AND  lessonid = :lessonid ";
 
-                    $lessonlogs = $DB->get_record_sql($queryttltime);
+                    $lessonlogs = $DB->get_record_sql($queryttltime, array('userid'=>$USER->id, 'lessonid'=>$lesson->id ));
 
                     if ($lessonlogs) :        // Get the time spent: $ttltime is in minutes  ->ttl is in seconds.
                         if ($lessonlogs->ttl > 1 ) :
@@ -102,7 +102,7 @@ class block_remaining_lesson_timer  extends block_base {
                         $ttltime = $ttltime / 10 ;
                     endif;
                 } // 6 end if ($requiredtime > 0 )
-            } // 5 end foreach ($coursemodles as $lesson)
+            } // 5 end if ($lesson)
 
             if ($requiredtime > 0 ) {
                 $strRequiredTime  = get_string('requiredtime',  'block_remaining_lesson_timer');
