@@ -29,4 +29,6 @@
   $string['timeremaining']  = 'Time Remaining';
   $string['timecompleted']  = 'Time Completed';
   $string['minutes']        = 'minutes';
+  $string['privacy:metadata'] = 'The remaining lesson timer block only displays existing lesson module data.';
+
 
