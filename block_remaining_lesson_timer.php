@@ -24,15 +24,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+// (this block-program will not run unless called by lesson/view.php).
 
-/**
- * The remaining lesson timer block class
- */
+// The remaining lesson timer block class.
 class block_remaining_lesson_timer  extends block_base {
 
-    /**
-     * Set the initial properties for the block
-     */
+    // Set the initial properties for the block.
     function init() {
         $this->title = get_string('pluginname', 'block_remaining_lesson_timer');
     }
@@ -66,7 +63,7 @@ class block_remaining_lesson_timer  extends block_base {
         $this->content->text = '';
         $this->content->footer = '';
 
-        // Confirm that this block-program is called by a lesson/view.php page., 
+        // this block-program will not run unless called by lesson/view.php.
         // else, terminate: return no content, end.
         if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson/view')) {
 
