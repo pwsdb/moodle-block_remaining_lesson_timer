@@ -25,12 +25,22 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * The remaining lesson timer block class
+ */
 class block_remaining_lesson_timer  extends block_base {
 
+    /**
+     * Set the initial properties for the block
+     */
     function init() {
         $this->title = get_string('pluginname', 'block_remaining_lesson_timer');
     }
 
+    /**
+     * Set the applicable formats for this block to all
+     * @return array
+     */
     function applicable_formats() {
         return array('site-index' => true,
                             'mod' => true,
