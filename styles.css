@@ -4,3 +4,9 @@
 }
 
 
+.block_remaining_lesson_timer  .minutestogo {
+    font-weight: bold;
+        background:#FFC; 
+        margin-top: 5px; 
+    }
+
