@@ -1,12 +1,17 @@
 <?php
-
+// To comply with GDPR requirements [for code compliance, see docs.moodle.org/dev/Privacy_API].
 namespace block_remaining_lesson_timer\privacy;
 
-class provider implements 
-    // This plugin does not store any personal user data.
+defined('MOODLE_INTERNAL') || die();
+
+// This plugin does not store any personal user data.
+class provider implements
     \core_privacy\local\metadata\null_provider {
 
-        public static function get_reason() : string {
+    /**
+     * This plugin does not store any personal user data.
+     */
+    public static function get_reason() : string {
         return 'privacy:metadata';
     }
 }
