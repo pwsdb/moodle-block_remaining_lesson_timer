@@ -24,7 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-// (this block-program will not run unless called by lesson/view.php).
+// This block-program will not run unless called by lesson/view.php.
 
 // The remaining lesson timer block class.
 class block_remaining_lesson_timer  extends block_base {
@@ -63,11 +63,11 @@ class block_remaining_lesson_timer  extends block_base {
         $this->content->text = '';
         $this->content->footer = '';
 
-        // this block-program will not run unless called by lesson/view.php.
+        // This block-program will not run unless called by lesson/view.php.
         // else, terminate: return no content, end.
         if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson/view')) {
 
-            $id = required_param('id', PARAM_INT);   
+            $id = required_param('id', PARAM_INT);
             $querycml =
                "SELECT  cm.id AS cmid,  cm.module,  cm.instance,
                         cm.section,  l.*
@@ -88,7 +88,7 @@ class block_remaining_lesson_timer  extends block_base {
                 if ($requiredtime > 0 ) {
                     $ttltime = 0 ;
                     $highscore = 0 ;
-                    // display the first 20 characters of the lesson title-name.
+                    // To display the first 20 characters of the lesson title-name.
                     $lsnname = substr($lesson->name, 0, 20);
                     $queryttltime =
                         "SELECT  lessontime,  starttime,  SUM(lessontime - starttime) AS ttl
@@ -112,19 +112,19 @@ class block_remaining_lesson_timer  extends block_base {
             } // 4 end if ($lesson)
 
             if ($requiredtime > 0 ) {
-                $strRequiredTime  = get_string('requiredtime',  'block_remaining_lesson_timer');
-                $strTimeRemaining = get_string('timeremaining', 'block_remaining_lesson_timer');
-                $strTimeSpent     = get_string('timespent',     'block_remaining_lesson_timer');
-                $strTimeCompleted = get_string('timecompleted', 'block_remaining_lesson_timer');
-                $strMinutes       = get_string('minutes',       'block_remaining_lesson_timer');
+                $strrequiredtime  = get_string('requiredtime',  'block_remaining_lesson_timer');
+                $strtimeremaining = get_string('timeremaining', 'block_remaining_lesson_timer');
+                $strtimespent     = get_string('timespent',     'block_remaining_lesson_timer');
+                $strtimecompleted = get_string('timecompleted', 'block_remaining_lesson_timer');
+                $strminutes       = get_string('minutes',       'block_remaining_lesson_timer');
                 $this->content->text .= '  '.$lsnname.'... ';
-                $this->content->text .= '  <p> '.$strRequiredTime.' <br> '.$requiredtime.' '.$strMinutes.' </p> ';
+                $this->content->text .= '  <p> '.$strrequiredtime.' <br> '.$requiredtime.' '.$strminutes.' </p> ';
                 if ( $ttltime > $requiredtime ) {
-                    $this->content->text .= '<p class=completed> <br> '.$strTimeCompleted.'  </p> ';
+                    $this->content->text .= '<p class=completed> <br> '.$strtimecompleted.'  </p> ';
                 } else {
-                    $this->content->text .= ' <p> '.$strTimeSpent.': '.$ttltime.' '.$strMinutes.' ';
-                    $this->content->text .= ' <br> <span class=minutestogo> '.$strTimeRemaining.': '.
-                                            ($requiredtime - $ttltime).' '.$strMinutes.' </span> </p> ';
+                    $this->content->text .= ' <p> '.$strtimespent.': '.$ttltime.' '.$strminutes.' ';
+                    $this->content->text .= ' <br> <span class=minutestogo> '.$strtimeremaining.': '.
+                                            ($requiredtime - $ttltime).' '.$strminutes.' </span> </p> ';
 
                     $pageid = optional_param('pageid', null, PARAM_INT);
 
