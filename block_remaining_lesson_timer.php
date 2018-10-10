@@ -23,13 +23,16 @@
  * @author     Greg Smith, Florida
  */
 
-defined('MOODLE_INTERNAL') || die();
-// This block-program will not run unless called by lesson/view.php.
 
-// The remaining lesson timer block class.
+/* This block-program will not run unless called by lesson/view.php. */
+defined('MOODLE_INTERNAL') || die();
+
+/* The remaining lesson timer block class. */
 class block_remaining_lesson_timer  extends block_base {
 
-    // Set the initial properties for the block.
+    /* 
+     * Set the initial properties for the block. 
+     */
     function init() {
         $this->title = get_string('pluginname', 'block_remaining_lesson_timer');
     }
@@ -52,6 +55,11 @@ class block_remaining_lesson_timer  extends block_base {
     function instance_allow_config() {
         return true;
     }
+
+    /**
+     * Return the content of this block.
+     * @return stdClass the content
+     */
     function get_content() {
 
         global $CFG, $USER, $DB;
