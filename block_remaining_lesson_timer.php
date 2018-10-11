@@ -30,8 +30,8 @@ defined('MOODLE_INTERNAL') || die();
 /* The remaining lesson timer block class. */
 class block_remaining_lesson_timer  extends block_base {
 
-    /* 
-     * Set the initial properties for the block. 
+    /*
+     * Set the initial properties for the block.
      */
     function init() {
         $this->title = get_string('pluginname', 'block_remaining_lesson_timer');
@@ -90,12 +90,12 @@ class block_remaining_lesson_timer  extends block_base {
                 if ( isset($lesson->maxtime) ) :
                     $requiredtime = $lesson->maxtime;
                 else:
-                    $requiredtime = (int)$lesson->completiontimespent / 60 ;
+                    $requiredtime = (int)($lesson->completiontimespent / 60);
                 endif;
 
                 if ($requiredtime > 0 ) {
-                    $ttltime = 0 ;
-                    $highscore = 0 ;
+                    $ttltime = 0;
+                    $highscore = 0;
                     // To display the first 20 characters of the lesson title-name.
                     $lsnname = substr($lesson->name, 0, 20);
                     $queryttltime =
@@ -114,7 +114,7 @@ class block_remaining_lesson_timer  extends block_base {
                             $ttltime = floor($lessonlogs->ttl / 6);
                             // Floor(#/6) rounds a number(#) DOWN to the tenth of a minute.
                         endif;
-                        $ttltime = $ttltime / 10 ;
+                        $ttltime = ($ttltime / 10);
                     endif;
                 } // 5 end if ($requiredtime > 0 )
             } // 4 end if ($lesson)
