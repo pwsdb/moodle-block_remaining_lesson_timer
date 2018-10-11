@@ -85,7 +85,7 @@ class block_remaining_lesson_timer  extends block_base {
                  WHERE  cm.id = :id
                    AND  cm.module = 11 ";
 
-            $lesson = $DB->get_record_sql($querycml, array('id'=>$id));
+            $lesson = $DB->get_record_sql($querycml, array('id' => $id));
             if ($lesson) {
                 if ( isset($lesson->maxtime) ) :
                     $requiredtime = $lesson->maxtime;
