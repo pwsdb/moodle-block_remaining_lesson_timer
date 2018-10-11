@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018051700;      // YYYYMMDDHH (Moodle 3.5+)
-$plugin->requires  = 2010112400;      // YYYYMMDDHH (Moodle 2.0+)
+$plugin->version   = 2018051700;      // YYYYMMDDHH (Moodle 3.5+).
+$plugin->requires  = 2010112400;      // YYYYMMDDHH (Moodle 2.0+).
 $plugin->component = 'block_remaining_lesson_timer';
 
