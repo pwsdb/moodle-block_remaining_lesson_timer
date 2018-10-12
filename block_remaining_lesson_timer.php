@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
+/**
  * Block for displaying the elapsed and remaining time in a timed lesson
  *
  * @package    block_remaining_lesson_timer
@@ -23,14 +23,14 @@
  * @author     Greg Smith, Florida
  */
 
-
-/* This block-program will not run unless called by lesson/view.php. */
 defined('MOODLE_INTERNAL') || die();
 
-/* The remaining lesson timer block class. */
+/**
+ * Displays remaining time in a lesson.
+ */
 class block_remaining_lesson_timer  extends block_base {
 
-    /*
+    /**
      * Set the initial properties for the block.
      */
     function init() {
@@ -104,7 +104,7 @@ class block_remaining_lesson_timer  extends block_base {
                           WHERE  userid = :userid
                             AND  lessonid = :lessonid ";
 
-                    $lessonlogs = $DB->get_record_sql($queryttltime, array('userid'=>$USER->id, 'lessonid'=>$lesson->id ));
+                    $lessonlogs = $DB->get_record_sql($queryttltime, array('userid' => $USER->id, 'lessonid' => $lesson->id ));
 
                     if ($lessonlogs) :        // Get the time spent: $ttltime is in minutes  ->ttl is in seconds.
                         if ($lessonlogs->ttl > 1 ) :
@@ -134,7 +134,7 @@ class block_remaining_lesson_timer  extends block_base {
                     $this->content->text .= ' <br> <span class=minutestogo> '.$strtimeremaining.': '.
                                             ($requiredtime - $ttltime).' '.$strminutes.' </span> </p> ';
 
-                    $pageid = optional_param('pageid', null, PARAM_INT);
+                    $pageid = (int)optional_param('pageid', null, PARAM_INT);
 
                     if ( !empty($pageid) )
                         $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' .
