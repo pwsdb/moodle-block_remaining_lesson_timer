@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Displays remaining time in a lesson.
+ * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_remaining_lesson_timer  extends block_base {
 
