@@ -138,7 +138,7 @@ class block_remaining_lesson_timer  extends block_base {
 
                     $pageid = (int)optional_param('pageid', null, PARAM_INT);
 
-                    if ( !empty($pageid) )
+                    if ( $pageid > 0 )
                         $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' .
                                 'href='. $CFG->wwwroot . '/mod/lesson/view.php?id='.$id.
                                 '&pageid='.$pageid.'> REFRESH TIMER </a></div>';
