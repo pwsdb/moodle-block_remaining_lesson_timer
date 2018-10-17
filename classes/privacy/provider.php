@@ -14,7 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-// To comply with GDPR requirements [for code compliance, see docs.moodle.org/dev/Privacy_API].
+/**
+ * Block for displaying the elapsed and remaining time in a timed lesson.
+ * There is no data entry nor storing of data.
+ *
+ * @package    block_remaining_lesson_timer
+ * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Greg Smith, Florida
+ */
 namespace block_remaining_lesson_timer\privacy;
 
 defined('MOODLE_INTERNAL') || die();
