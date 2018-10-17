@@ -16,7 +16,6 @@
 
 /**
  * Block for displaying the elapsed and remaining time in a timed lesson.
- * There is no data entry nor storing of data.
  *
  * @package    block_remaining_lesson_timer
  * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
@@ -29,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Block for displaying the elapsed and remaining time in a timed lesson.
+ * There is no data entry nor storing of data.
  * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
