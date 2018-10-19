@@ -97,7 +97,6 @@ class block_remaining_lesson_timer  extends block_base {
 
                 if ($requiredtime > 0 ) {
                     $ttltime = 0;
-                    $highscore = 0;
                     // To display the first 20 characters of the lesson title-name.
                     $lsnname = substr($lesson->name, 0, 20);
                     $queryttltime =
