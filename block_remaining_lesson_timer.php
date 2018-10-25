@@ -117,8 +117,8 @@ class block_remaining_lesson_timer  extends block_base {
                         endif;
                         $ttltime = ($ttltime / 10);
                     endif;
-                } // 5 end of "if ($requiredtime > 0)"
-            } // 4 end of "if ($lesson)"
+                } // 5 end of  if ($requiredtime > 0)
+            } // 4 end of  if ($lesson)
 
             if ($requiredtime > 0) {
                 $strrequiredtime  = get_string('requiredtime',  'block_remaining_lesson_timer');
@@ -137,17 +137,18 @@ class block_remaining_lesson_timer  extends block_base {
 
                     $pageid = (int)optional_param('pageid', null, PARAM_INT);
 
-                    if ($pageid > 0)
+                    if ($pageid > 0) :
                         $this->content->text .= ' <div class=refresh> <a  title="refresh / reload current page" ' .
                                 'href='. $CFG->wwwroot . '/mod/lesson/view.php?id='.$id.
                                 '&pageid='.$pageid.'> REFRESH TIMER </a></div>';
+                    endif;
                         // Refreshing view.php updates the timer except on the first page of a lesson
                         // On the first page, till moodle 3.3 the timer does not increment. It zeros the saved time!
                         // The continue.php causes a browser warning against resending data and repeating actions
-                } // 5 end of "if ( $ttltime > $requiredtime )"
-            } // 4 end of "if ($requiredtime > 0 )"
+                } // 5 end of  if ( $ttltime > $requiredtime )
+            } // 4 end of  if ($requiredtime > 0 )
 
-        } // 3 end of "if (stripos($_SERVER['SCRIPT_FILENAME'], 'lesson/view'))"
+        } // 3 end of  if (stripos($_SERVER[SCRIPT_FILENAME], 'lesson/view'))
 
         return $this->content;
     } // 2 end of function get_content()
