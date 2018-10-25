@@ -118,7 +118,7 @@ class block_remaining_lesson_timer  extends block_base {
                         $ttltime = ($ttltime / 10);
                     endif;
                 } // 5 end of  if ($requiredtime > 0)
-            } // 4 end of  if ($lesson)
+            } // 4 end of  "if ($lesson)"
 
             if ($requiredtime > 0) {
                 $strrequiredtime  = get_string('requiredtime',  'block_remaining_lesson_timer');
@@ -148,7 +148,7 @@ class block_remaining_lesson_timer  extends block_base {
                 } // 5 end of  if ( $ttltime > $requiredtime )
             } // 4 end of  if ($requiredtime > 0 )
 
-        } // 3 end of  if (stripos($_SERVER[SCRIPT_FILENAME], 'lesson/view'))
+        } // 3 end of  "if (stripos($_SERVER[SCRIPT_FILENAME], 'lesson/view'))"
 
         return $this->content;
     } // 2 end of function get_content()
