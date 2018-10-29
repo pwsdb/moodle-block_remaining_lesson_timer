@@ -32,11 +32,13 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2007 onwards Greg Smith,   {@link http://TomWilsonCounseling.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements
-    \core_privacy\local\metadata\null_provider {
+class provider implements  \core_privacy\local\metadata\null_provider {
 
     /**
-     * This plugin has no data entry and does not store any personal user data.
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
      */
     public static function get_reason() : string {
         return 'privacy:metadata';
