@@ -40,14 +40,13 @@ class block_remaining_lesson_timer  extends block_base {
     }
 
     /**
-     * Set the applicable formats for this block to all
+     * Set the applicable formats for this block.
      * @return array
      */
     function applicable_formats() {
-        return array('site-index' => true,
-                            'mod' => true,
-                    'lesson-view' => true,
-                    'course-view' => true);
+        return array('my' => false,
+            'lesson-view' => true);
+            // If the block cannot be displayed on /my it is ok if the myaddinstance capability is not defined.
     }
 
     /**
