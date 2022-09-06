@@ -82,9 +82,10 @@ class block_remaining_lesson_timer  extends block_base {
                         cm.section,  l.*
                   FROM  {course_modules}  cm
                   JOIN  {lesson} l
-                    ON  ( l.id = cm.instance  AND  cm.course = l.course )
+                  JOIN  {modules} m
+                    ON  ( l.id = cm.instance  AND  cm.course = l.course  AND m.id = cm.module)
                  WHERE  cm.id = :id
-                   AND  cm.module = 11 ";
+                   AND  m.name = 'lesson' ";
 
             $lesson = $DB->get_record_sql($querycml, array('id' => $id));
             if ($lesson) {
